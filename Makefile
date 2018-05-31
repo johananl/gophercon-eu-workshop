@@ -7,6 +7,8 @@ RELEASE?=0.0.0
 COMMIT?=$(shell git rev-parse --short HEAD)
 BUILD_TIME?=$(shell date -u '+%Y-%m-%d_%H:%M:%S')
 
+CONTAINER_IMAGE?=docker.io/johananl/${APP}
+
 clean:
 	rm -f ./bin/${APP}
 
@@ -20,6 +22,9 @@ build: clean
 
 run: build
 	PORT=${PORT} INTERNAL_PORT=${INTERNAL_PORT} ./bin/${APP}
+
+container: build
+	docker build -t $(CONTAINER_IMAGE):$(RELEASE) .
 
 test:
 	go test -race ./...
