@@ -11,7 +11,7 @@ import (
 func main() {
 	log.Printf("Service is starting...")
 
-	port := os.Getenv("SERVICE_PORT")
+	port := os.Getenv("PORT")
 	if len(port) == 0 {
 		log.Fatal("Port must be specified")
 	}
