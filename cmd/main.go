@@ -12,8 +12,8 @@ import (
 )
 
 func main() {
+	// TODO The values don't show - need to troubleshoot.
 	log.Printf("Service is starting. version is %s, commit is %s, time is %s",
-		// TODO The values don't show - need to troubleshoot.
 		version.Release, version.Commit, version.BuildTime,
 	)
 
