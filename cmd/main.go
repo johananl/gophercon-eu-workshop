@@ -2,15 +2,22 @@ package main
 
 import (
 	"log"
-	"net/http"
+	"os"
 
 	"github.com/johananl/gophercon-eu-workshop/pkg/routing"
+	"github.com/johananl/gophercon-eu-workshop/webserver"
 )
 
 func main() {
 	log.Printf("Service is starting...")
 
-	r := routing.BaseRouter()
+	port := os.Getenv("SERVICE_PORT")
+	if len(port) == 0 {
+		log.Fatal("Port must be specified")
+	}
 
-	log.Fatal(http.ListenAndServe(":8080", r))
+	r := routing.BaseRouter()
+	ws := webserver.New("", port, r)
+
+	log.Fatal(ws.Start())
 }
