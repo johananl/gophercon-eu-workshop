@@ -22,3 +22,15 @@ func homeHandler() func(http.ResponseWriter, *http.Request) {
 		fmt.Fprint(w, "Hello! Your request was processed.")
 	}
 }
+
+func readyzHandler() func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, http.StatusText(http.StatusOK))
+	}
+}
+
+func healthzHandler() func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, http.StatusText(http.StatusOK))
+	}
+}

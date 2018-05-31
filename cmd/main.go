@@ -17,11 +17,22 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if len(port) == 0 {
-		log.Fatal("Port must be specified")
+		log.Fatal("PORT must be specified")
 	}
 
 	r := routing.BaseRouter()
 	ws := webserver.New("", port, r)
+
+	internalPort := os.Getenv("INTERNAL_PORT")
+	if len(internalPort) == 0 {
+		log.Fatal("INTERNAL_PORT must be specified")
+	}
+	diagRouter := routing.DiagnosticsRouter()
+	diagServer := webserver.New("", internalPort, diagRouter)
+
+	go func() {
+		log.Fatal(diagServer.Start())
+	}()
 
 	log.Fatal(ws.Start())
 }
