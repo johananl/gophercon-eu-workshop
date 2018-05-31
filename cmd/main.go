@@ -4,12 +4,17 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 func main() {
 	log.Printf("Service is starting...")
-	http.HandleFunc("/home", homeHandler())
-	http.ListenAndServe(":8080", nil)
+
+	r := mux.NewRouter()
+	r.HandleFunc("/home", homeHandler()).Methods(http.MethodGet)
+
+	http.ListenAndServe(":8080", r)
 }
 
 func homeHandler() func(http.ResponseWriter, *http.Request) {
